@@ -1,2 +1,0 @@
-# mojolicious-plugin-concert-config
-
