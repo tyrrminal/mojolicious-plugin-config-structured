@@ -3,6 +3,7 @@ package Mojolicious::Plugin::Concert::Config;
 # ABSTRACT: Mojolicious Plugin for Concert::Config
 
 use Mojo::Base 'Mojolicious::Plugin';
+use Concert::Config;
 use Concert::Constants;
 
 sub register {
