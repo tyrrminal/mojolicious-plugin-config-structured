@@ -16,7 +16,7 @@ sub register {
     File::Spec->catfile($app->home,join($PERIOD, $app->moniker,             'conf'))
   );
   foreach my $conf_file (grep {$_} @search) {
-    if(defined($conf_file) && -e $conf_file) {
+    if(-e $conf_file) {
       $app->log->info("Initializing Concert::Config from '$conf_file'");
       $conf = do $conf_file; last;
     }
