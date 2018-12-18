@@ -12,8 +12,8 @@ sub register {
   my $conf = {};
   my @search = (
     $params->{config_file},
-    File::Spec->catfile($app->home,join($PERIOD, $app->moniker, $app->mode, 'conf')),
-    File::Spec->catfile($app->home,join($PERIOD, $app->moniker,             'conf'))
+    $app->home->rel_file(join($PERIOD, $app->moniker, $app->mode, 'conf')),
+    $app->home->rel_file(join($PERIOD, $app->moniker,             'conf'))
   );
   my ($conf_file) = grep {$_ && -r -f $_} @search; #get the first extant, readable file
   if(defined($conf_file)) {
@@ -24,7 +24,7 @@ sub register {
   }
 
   my $def = {};
-  my $def_file = File::Spec->catfile($app->home,join($PERIOD, $app->moniker, qw(conf def)));
+  my $def_file = $app->home->rel_file(join($PERIOD, $app->moniker, qw(conf def)));
   if(-r -f $def_file) {
     $def = _parse_cfg_file($def_file);
   } else {
