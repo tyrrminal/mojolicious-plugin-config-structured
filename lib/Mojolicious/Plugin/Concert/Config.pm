@@ -1,6 +1,6 @@
 package Mojolicious::Plugin::Concert::Config;
 
-# ABSTRACT: Mojolicious Plugin for Concert::Config
+use v5.22;
 
 use Config::Structured;
 
