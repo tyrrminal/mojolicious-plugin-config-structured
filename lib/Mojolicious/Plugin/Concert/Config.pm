@@ -1,5 +1,6 @@
 package Mojolicious::Plugin::Config::Structured 1.000;
 
+# ABSTRACT: Mojolicious Plugin for Config::Structured: locates and reads config and definition files and loads them into a Config::Structured instance, made available globally as 'conf'
 use v5.22;
 
 use Mojo::Base 'Mojolicious::Plugin', -signatures;
@@ -47,6 +48,7 @@ sub register ($self, $app, $params) {
 }
 
 
+# TODO: handle files in other formats (yml, json, xml?) rather than just pl
 sub _parse_cfg_file($f) {
   return do $f;
 }
