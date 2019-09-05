@@ -1,13 +1,14 @@
-package Mojolicious::Plugin::Concert::Config;
+package Mojolicious::Plugin::Config::Structured 1.000;
 
 use v5.22;
 
+use Mojo::Base 'Mojolicious::Plugin', -signatures;
 use Config::Structured;
 
 sub register {
   my ($self, $app, $params) = @_;
 
-  my $conf = {};
+sub register ($self, $app, $params) {
   my @search = (
     $params->{config_file},
     $app->home->rel_file(join($PERIOD, $app->moniker, $app->mode, 'conf')),
@@ -38,9 +39,7 @@ sub register {
 }
 
 
-# Someday we'll handle json/yml/xml?/ini? here, but for now just supports perl structure
-sub _parse_cfg_file {
-  my $f = shift;
+sub _parse_cfg_file($f) {
   return do $f;
 }
 
