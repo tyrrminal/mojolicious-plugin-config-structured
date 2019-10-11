@@ -21,17 +21,17 @@ sub register ($self, $app, $params) {
   );
 
   my $conf = {};
-  my ($conf_file) = grep {$_ && -r -f $_} @search;    #get the first existent, readable file
+  my ($conf_file) = grep {defined && -r -f} @search;    #get the first existent, readable file
   if (defined($conf_file)) {
     $app->log->info("[Config::Structured] Initializing from '$conf_file'");
     $conf = _parse_cfg_file($conf_file);
   } else {
-    $app->log->error("[Config::Structured] Initializing with empty configuration");
+    $app->log->error('[Config::Structured] Initializing with empty configuration');
   }
 
   my $def = {};
-  my ($def_file) = grep {-r -f $_} $app->home->rel_file(join($PERIOD, $app->moniker, $CONF_FILE_SUFFIX, $DEF_FILE_SUFFIX));
-  if (defined($def_file)) {
+  my ($def_file) = $app->home->rel_file(join($PERIOD, $app->moniker, $CONF_FILE_SUFFIX, $DEF_FILE_SUFFIX));
+  if (defined($def_file) && -r -f $def_file) {
     $def = _parse_cfg_file($def_file);
   } else {
     $app->log->error("[Config::Structured] No configuration definition found (tried to read from `$def_file`)");
