@@ -39,10 +39,10 @@ sub register ($self, $app, $params) {
 
   $app->helper(
     conf => sub {
-      state $config = Config::Structured->new(
+      Config::Structured->get() // Config::Structured->new(
         config_values => $conf,
         definition    => $def
-      );
+      )->__register_default;
     }
   );
 }
