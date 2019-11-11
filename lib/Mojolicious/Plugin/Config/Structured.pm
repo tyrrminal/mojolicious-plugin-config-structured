@@ -1,7 +1,51 @@
-package Mojolicious::Plugin::Config::Structured 1.000;
+package Mojolicious::Plugin::Config::Structured;
 
 # ABSTRACT: Mojolicious Plugin for Config::Structured: locates and reads config and definition files and loads them into a Config::Structured instance, made available globally as 'conf'
-use v5.22;
+
+=head1 SYNOPSIS
+
+  # For a full Mojo app
+  $self->plugin('Config::Structured' => {config_file => $filename});
+
+  ...
+
+  if ($c->conf->feature->enabled) {
+    ...
+  }
+
+  say $c->conf->email->recipient->{some_feature};
+
+=head1 DESCRIPTION
+
+Initializes L<Config::Structured> from two files:
+
+=over 
+
+=item C<definition> 
+
+pulled from $app_home/$moniker.conf.def
+
+=item C<config_values> 
+
+pulled from the first existent, readable file from:
+
+  config_file parameter value
+
+  $app_home/$moniker.$mode.conf
+
+  $app_home/$moniker.conf
+
+These files are expected to contain perl hashref structures
+
+=back
+
+=method conf()
+
+Returns an L<Config::Structured> instance initialized to the root of the 
+configuration definition
+
+=cut
+use 5.022;
 
 use Mojo::Base 'Mojolicious::Plugin', -signatures;
 use Config::Structured;
@@ -45,10 +89,11 @@ sub register ($self, $app, $params) {
       )->__register_default;
     }
   );
+
+  return;
 }
 
-
-# TODO: handle files in other formats (yml, json, xml?) rather than just pl
+# TODO: handle files in other formats (yml, json, xml?) rather than just perl structure
 sub _parse_cfg_file($f) {
   return do $f;
 }
