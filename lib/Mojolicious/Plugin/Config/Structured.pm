@@ -66,36 +66,26 @@ sub register ($self, $app, $params) {
 
   my $conf = {};
   my ($conf_file) = grep {defined && -r -f} @search;    #get the first existent, readable file
-  if (defined($conf_file)) {
-    $app->log->info("[Config::Structured] Initializing from '$conf_file'");
-    $conf = _parse_cfg_file($conf_file);
-  } else {
+  unless (defined($conf_file)) {
     $app->log->error('[Config::Structured] Initializing with empty configuration');
   }
 
   my $def = {};
   my ($def_file) = $app->home->rel_file(join($PERIOD, $app->moniker, $CONF_FILE_SUFFIX, $DEF_FILE_SUFFIX));
-  if (defined($def_file) && -r -f $def_file) {
-    $def = _parse_cfg_file($def_file);
-  } else {
+  unless (defined($def_file) && -r -f $def_file) {
     $app->log->error("[Config::Structured] No configuration definition found (tried to read from `$def_file`)");
   }
 
   $app->helper(
     conf => sub {
       Config::Structured->get() // Config::Structured->new(
-        config_values => $conf,
-        definition    => $def
+        config    => $conf_file,
+        structure => $def_file
       )->__register_default;
     }
   );
 
   return;
-}
-
-# TODO: handle files in other formats (yml, json, xml?) rather than just perl structure
-sub _parse_cfg_file($f) {
-  return do $f;
 }
 
 1;
