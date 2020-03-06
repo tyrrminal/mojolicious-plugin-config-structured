@@ -63,15 +63,13 @@ sub register ($self, $app, $params) {
     $app->home->rel_file(join($PERIOD, $app->moniker, $app->mode, $CONF_FILE_SUFFIX)),
     $app->home->rel_file(join($PERIOD, $app->moniker, $CONF_FILE_SUFFIX))
   );
-
-  my $conf = {};
   my ($conf_file) = grep {defined && -r -f} @search;    #get the first existent, readable file
   unless (defined($conf_file)) {
     $app->log->error('[Config::Structured] Initializing with empty configuration');
   }
 
-  my $def = {};
-  my ($def_file) = $app->home->rel_file(join($PERIOD, $app->moniker, $CONF_FILE_SUFFIX, $DEF_FILE_SUFFIX));
+  @search = ($params->{structure_file}, $app->home->rel_file(join($PERIOD, $app->moniker, $CONF_FILE_SUFFIX, $DEF_FILE_SUFFIX)));
+  my ($def_file) = grep {defined && -r -f} @search;
   unless (defined($def_file) && -r -f $def_file) {
     $app->log->error("[Config::Structured] No configuration definition found (tried to read from `$def_file`)");
   }
