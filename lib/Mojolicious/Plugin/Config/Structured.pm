@@ -75,12 +75,14 @@ sub register ($self, $app, $params) {
     $app->log->error("[Config::Structured] No configuration definition found (tried to read from `$def_file`)");
   }
 
+  my $conf = Config::Structured->new(
+    config    => $conf_file,
+    structure => $def_file
+  )->__register_default;
+
   $app->helper(
     conf => sub {
-      Config::Structured->get() // Config::Structured->new(
-        config    => $conf_file,
-        structure => $def_file
-      )->__register_default;
+      return $conf;
     }
   );
 
