@@ -77,7 +77,8 @@ sub register ($self, $app, $params) {
 
   my $conf = Config::Structured->new(
     config    => $conf_file,
-    structure => $def_file
+    structure => $def_file,
+    hooks     => $params->{hooks},
   )->__register_default;
 
   $app->helper(
