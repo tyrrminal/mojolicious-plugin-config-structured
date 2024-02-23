@@ -67,7 +67,7 @@ sub register ($self, $app, $params) {
   );
   my ($def_file) = grep {defined && -r -f} @search;    #get the first existing, readable file
   unless (defined($def_file) && -r -f $def_file) {
-    $app->log->error("[Config::Structured] No configuration structure found (tried to read from `$def_file`)");
+    $app->log->error(sprintf('[Config::Structured] No configuration structure found (tried to read from `%s`)', $def_file // ''));
     die("[Config::Structured] Cannot continue without a valid conf structure");
   }
 
