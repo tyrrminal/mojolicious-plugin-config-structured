@@ -78,7 +78,8 @@ sub register ($self, $app, $params) {
   );
   my ($conf_file) = grep {defined && -r -f} @search;    #get the first existing, readable file
   unless (defined($conf_file)) {
-    $app->log->error('[Config::Structured] Initializing with empty configuration');
+    $app->log->warn('[Config::Structured] Initializing with empty configuration');
+    $conf_file = {}
   }
 
   my $conf = Config::Structured->new(
