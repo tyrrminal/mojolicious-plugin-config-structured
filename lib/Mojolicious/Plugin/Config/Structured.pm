@@ -61,6 +61,8 @@ used (C<./{app}.{mode}.conf> or C<./{app}.conf>)
 =cut
 
 sub register ($self, $app, $params) {
+  push($app->commands->namespaces->@*, __PACKAGE__.'::Command');
+
   my @search = (
     $params->{structure_file}, 
     $app->home->child(join($PERIOD, $app->moniker, $CONF_FILE_SUFFIX, $DEF_FILE_SUFFIX))->to_string
