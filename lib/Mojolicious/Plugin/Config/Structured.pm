@@ -88,7 +88,7 @@ sub register ($self, $app, $params) {
     config    => $conf_file,
     structure => $def_file,
     hooks     => $params->{hooks},
-  )->__register_default;
+  );
 
 =pod
 
