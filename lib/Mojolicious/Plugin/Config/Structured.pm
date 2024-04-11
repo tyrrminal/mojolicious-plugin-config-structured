@@ -1,5 +1,5 @@
 package Mojolicious::Plugin::Config::Structured;
-use v5.22;
+use v5.26;
 use warnings;
 
 # ABSTRACT: Mojolicious Plugin for Config::Structured: provides Mojo app access to structured configuration data
