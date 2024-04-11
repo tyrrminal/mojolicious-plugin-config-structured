@@ -95,7 +95,7 @@ sub register ($self, $app, $params) {
 =head2 conf
 
 This method is used to access the loaded configuration from within the Mojo 
-application. Returns the root L<Config::Structured> instance.
+application. Returns the root C<Config::Structured::Node> instance.
 
 =cut
 
