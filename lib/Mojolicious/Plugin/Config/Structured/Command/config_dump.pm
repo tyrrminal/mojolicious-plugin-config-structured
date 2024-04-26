@@ -98,7 +98,7 @@ my sub dump_node($conf, %params) {
   my $indent   = '  'x$depth;
 
   if(defined($name)) {
-    say stringify_value($conf->$name) and return unless(is_branch($conf->$name));
+    say stringify_value($conf->$name($allow_sensitive)) and return unless(is_branch($conf->$name));
     $conf = $conf->$name;
   }
 
